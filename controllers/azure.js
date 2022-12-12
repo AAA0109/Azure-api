@@ -1,11 +1,16 @@
 const arp = require("azure-retail-prices");
 
 exports.getRetailPrices = async (req, res) => {
-  const filter = req.filter || {};
+  const filter = req.body.filter || {};
   // without currencyCode option (It will return USD)
-  let retailPrices = await arp.default(req.filter);
-  console.log(retailPrices);
-  res.send({ data: retailPrices });
+  try {
+    let retailPrices = await arp.default(filter);
+    console.log(retailPrices);
+    res.send({ success: true, data: retailPrices });
+  } catch (ex) {
+    console.log('error', ex);
+    res.send({ success: false, error: ex });
+  }
   // let retailPrices = await arp.default({
   //   serviceName: "Virtual Machines",
   //   location: "US North Central",

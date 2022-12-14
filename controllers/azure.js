@@ -31,7 +31,7 @@ exports.getRetailPrices = async (req, res) => {
   // console.dir(retailPrices);
 }
 
-exports.getRetailPrices = async (req, res) => {
+exports.getRetailPricesWithSku = async (req, res) => {
   const filter = req.body.filter || {};
   const skus = req.body.skus || [];
   // without currencyCode option (It will return USD)

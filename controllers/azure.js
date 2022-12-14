@@ -30,3 +30,22 @@ exports.getRetailPrices = async (req, res) => {
   // );
   // console.dir(retailPrices);
 }
+
+exports.getRetailPrices = async (req, res) => {
+  const filter = req.body.filter || {};
+  const skus = req.body.skus || [];
+  // without currencyCode option (It will return USD)
+  let ret = [];
+  for (let i = 0; i < skus.length; i ++) {
+    try {
+      filter.armSkuName = skus[i];
+      let retailPrices = await arp.default(filter);
+      console.log(retailPrices);
+      ret.push(...retailPrices);
+    }
+    catch (ex) {
+      console.log('error', ex);
+    }
+    res.send({ success: true, data: ret });
+  }
+}
